@@ -3,6 +3,8 @@ package kpol.Inventory.domain.member.entity;
 import jakarta.persistence.*;
 import kpol.Inventory.domain.board.entity.Board;
 import kpol.Inventory.domain.comment.entity.Comment;
+import kpol.Inventory.domain.member.dto.req.SignupRequestDto;
+import kpol.Inventory.domain.member.enums.MemberRole;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,7 +38,8 @@ public class Member {
     private String password;
 
     @Column(nullable = false)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boards = new ArrayList<>();
@@ -47,12 +50,16 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> likeBoard = new ArrayList<>();
 
+    public Member(SignupRequestDto signupRequestDto, String encodedPassword) {
+        this.username = signupRequestDto.getUsername();
+        this.nickname = signupRequestDto.getNickname();
+        this.email = signupRequestDto.getEmail();
+        this.password = encodedPassword;
+        this.role = MemberRole.USER;
+    }
+
     public void updateInfo(String nickname, String password){
         this.nickname = nickname;
         this.password = password;
-    }
-
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
     }
 }
