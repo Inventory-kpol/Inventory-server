@@ -47,9 +47,12 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
+<<<<<<< HEAD
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> likeBoard = new ArrayList<>();
 
+=======
+>>>>>>> 6874030f37a64461c1265af353bdf48cab2fee8c
     public Member(SignupRequestDto signupRequestDto, String encodedPassword) {
         this.username = signupRequestDto.getUsername();
         this.nickname = signupRequestDto.getNickname();
@@ -57,9 +60,12 @@ public class Member {
         this.password = encodedPassword;
         this.role = MemberRole.USER;
     }
+<<<<<<< HEAD
 
     public void updateInfo(String nickname, String password){
         this.nickname = nickname;
         this.password = password;
     }
+=======
+>>>>>>> 6874030f37a64461c1265af353bdf48cab2fee8c
 }

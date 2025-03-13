@@ -57,10 +57,13 @@ public class MemberController {
     public ResponseEntity<Boolean> deleteMember(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody DeleteMemberRequestDto deleteMemberRequestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(memberService.deleteMember(userDetails.getMember(),deleteMemberRequestDto));
     }
+<<<<<<< HEAD
 
     // 페이지 별 닉네임 반환
     @GetMapping("/page/nickname")
     public ResponseEntity<String> getMainNickname(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity.status(HttpStatus.OK).body(memberService.getMainNickname(userDetails.getMember()));
     }
+=======
+>>>>>>> 6874030f37a64461c1265af353bdf48cab2fee8c
 }

@@ -23,4 +23,8 @@ public class Tag {
 
     @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BoardTag> boardTags = new ArrayList<>();
+
+    public Tag(String name) {
+        this.name = name;
+    }
 }

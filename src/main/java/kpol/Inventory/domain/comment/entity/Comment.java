@@ -2,10 +2,9 @@ package kpol.Inventory.domain.comment.entity;
 
 import jakarta.persistence.*;
 import kpol.Inventory.domain.board.entity.Board;
+import kpol.Inventory.domain.comment.dto.req.CommentRequestDto;
 import kpol.Inventory.domain.member.entity.Member;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,8 +13,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
+@Builder // builder 추가
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "comment")
 public class Comment {
@@ -49,4 +51,10 @@ public class Comment {
 
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> replies = new ArrayList<>();
+
+    public void updateContent(String content) {
+        this.content = content;
+        this.updatedAt = LocalDateTime.now(); // 수정 시간 업데이트
+    }
+
 }

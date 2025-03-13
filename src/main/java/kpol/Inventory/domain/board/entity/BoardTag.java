@@ -22,4 +22,9 @@ public class BoardTag {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
     private Tag tag;
+
+    public BoardTag(Board board, Tag tag) {
+        this.board = board;
+        this.tag = tag;
+    }
 }

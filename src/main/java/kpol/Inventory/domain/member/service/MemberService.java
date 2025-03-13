@@ -152,8 +152,11 @@ public class MemberService {
         log.info("Member {} deleted", member);
         return true;
     }
+<<<<<<< HEAD
 
     public String getMainNickname(Member member) {
         return member.getNickname();
     }
+=======
+>>>>>>> 6874030f37a64461c1265af353bdf48cab2fee8c
 }
