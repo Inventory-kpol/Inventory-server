@@ -6,8 +6,11 @@ import kpol.Inventory.domain.comment.entity.Comment;
 import kpol.Inventory.domain.member.dto.req.SignupRequestDto;
 import kpol.Inventory.domain.member.enums.MemberRole;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -44,6 +47,12 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
+<<<<<<< HEAD
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Board> likeBoard = new ArrayList<>();
+
+=======
+>>>>>>> 6874030f37a64461c1265af353bdf48cab2fee8c
     public Member(SignupRequestDto signupRequestDto, String encodedPassword) {
         this.username = signupRequestDto.getUsername();
         this.nickname = signupRequestDto.getNickname();
@@ -51,4 +60,12 @@ public class Member {
         this.password = encodedPassword;
         this.role = MemberRole.USER;
     }
+<<<<<<< HEAD
+
+    public void updateInfo(String nickname, String password){
+        this.nickname = nickname;
+        this.password = password;
+    }
+=======
+>>>>>>> 6874030f37a64461c1265af353bdf48cab2fee8c
 }

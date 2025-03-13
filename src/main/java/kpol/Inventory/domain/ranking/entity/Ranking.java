@@ -17,7 +17,7 @@ public class Ranking {
     private Long id;
 
     @Column(nullable = false)
-    private int rank;
+    private int ranking_value;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")

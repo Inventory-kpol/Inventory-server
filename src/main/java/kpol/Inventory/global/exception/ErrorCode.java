@@ -10,12 +10,15 @@ public enum ErrorCode {
 
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 500, "서버 에러 발생"),
 
+<<<<<<< HEAD
+=======
     // Comment
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "댓글을 찾을 수 없습니다."),
     COMMENT_CREATE_FAILED(HttpStatus.BAD_REQUEST, 400, "댓글 생성에 실패하였습니다."),
     COMMENT_UPDATE_FAILED(HttpStatus.BAD_REQUEST, 400, "댓글 수정에 실패하였습니다."),
     COMMENT_DELETE_FAILED(HttpStatus.BAD_REQUEST, 400, "댓글 삭제에 실패하였습니다."),
 
+>>>>>>> 6874030f37a64461c1265af353bdf48cab2fee8c
     // Board
     BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "게시물 조회에 실패하였습니다."),
     BOARD_CREATED_FAILED(HttpStatus.BAD_REQUEST, 400, "게시물 생성에 실패하였습니다."),
@@ -24,11 +27,14 @@ public enum ErrorCode {
     BOARD_GET_LATEST(HttpStatus.NOT_FOUND, 404, "최신 글 조회에 실패하였습니다."),
     TAG_ADDED_FAILED(HttpStatus.BAD_REQUEST, 400, "해시태그 추가에 실패하였습니다."),
     TAG_FOUNDED_FAILED(HttpStatus.BAD_REQUEST, 400, "해시태그 기반 검색에 실패하였습니다."),
+<<<<<<< HEAD
+=======
   
     // Board
     BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "게시물 조회에 실패하였습니다."),
     BOARD_CREATED_FAILED(HttpStatus.BAD_REQUEST, 400, "게시물 생성에 실패하였습니다."),
     TAG_ADDED_FAILED(HttpStatus.BAD_REQUEST, 400, "해시태그 추가에 실패하였습니다."),
+>>>>>>> 6874030f37a64461c1265af353bdf48cab2fee8c
     KEYWORD_CANNOT_EMPTY(HttpStatus.BAD_REQUEST, 400, "검색어는 공백이 될 수 없습니다."),
     TAG_CANNOT_EMPTY(HttpStatus.BAD_REQUEST, 400, "해시태그는 공백이 될 수 없습니다."),
 
@@ -44,6 +50,12 @@ public enum ErrorCode {
     JWT_ENTRY_POINT(HttpStatus.UNAUTHORIZED, 401, "[Jwt] 인증되지 않은 사용자입니다."),
     JWT_ACCESS_DENIED(HttpStatus.FORBIDDEN, 403, "[Jwt] 리소스에 접근할 권한이 없습니다."),
 
+<<<<<<< HEAD
+    // OAUTH
+    OAUTH_NAVER_UNLINK_FAILED(HttpStatus.BAD_REQUEST, 400, "[OAuth] 네이버 연동 해제에 실패했습니다."),
+
+=======
+>>>>>>> 6874030f37a64461c1265af353bdf48cab2fee8c
     // Member
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "맴버를 찾을 수 없습니다."),
     LOGIN_MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "존재하지 않는 이메일입니다."),
@@ -60,7 +72,11 @@ public enum ErrorCode {
 
     // RequestBody
     INVALID_PARAMS(HttpStatus.BAD_REQUEST, 400, "유효하지 않은 데이터가 전송되었습니다.");
+<<<<<<< HEAD
+
+=======
   
+>>>>>>> 6874030f37a64461c1265af353bdf48cab2fee8c
     private final HttpStatus httpStatus;
     private final Integer code;
     private final String message;
