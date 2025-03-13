@@ -63,5 +63,4 @@ public class MemberController {
     public ResponseEntity<String> getMainNickname(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity.status(HttpStatus.OK).body(memberService.getMainNickname(userDetails.getMember()));
     }
-
 }
