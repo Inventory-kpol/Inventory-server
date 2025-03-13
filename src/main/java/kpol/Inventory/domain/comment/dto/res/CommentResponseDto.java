@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-
-
 public class CommentResponseDto {
     private Long id; //댓글 고유 id
     private String content; // 댓글 내용
@@ -32,7 +30,7 @@ public class CommentResponseDto {
         this.parentCommentId = parentCommentId;
         this.replies = replies;
     }
-
+  
     public CommentResponseDto(Comment comment) {
         this.id = comment.getId();
         this.content = comment.getContent();

@@ -54,4 +54,9 @@ public class Member {
         this.password = encodedPassword;
         this.role = MemberRole.USER;
     }
+
+    public void updateInfo(String nickname, String password){
+        this.nickname = nickname;
+        this.password = password;
+    }
 }

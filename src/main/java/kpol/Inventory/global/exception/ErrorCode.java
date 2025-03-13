@@ -10,6 +10,12 @@ public enum ErrorCode {
 
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 500, "서버 에러 발생"),
 
+    // Comment
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "댓글을 찾을 수 없습니다."),
+    COMMENT_CREATE_FAILED(HttpStatus.BAD_REQUEST, 400, "댓글 생성에 실패하였습니다."),
+    COMMENT_UPDATE_FAILED(HttpStatus.BAD_REQUEST, 400, "댓글 수정에 실패하였습니다."),
+    COMMENT_DELETE_FAILED(HttpStatus.BAD_REQUEST, 400, "댓글 삭제에 실패하였습니다."),
+
     // Board
     BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "게시물 조회에 실패하였습니다."),
     BOARD_CREATED_FAILED(HttpStatus.BAD_REQUEST, 400, "게시물 생성에 실패하였습니다."),

@@ -143,6 +143,4 @@ public class CommentService {
         commentRepository.delete(comment);
         return true;
     }
-
-
 }
