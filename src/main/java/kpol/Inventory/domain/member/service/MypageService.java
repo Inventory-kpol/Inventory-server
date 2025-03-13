@@ -9,8 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -45,30 +45,38 @@ public class MypageService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
 
-        return member.getBoards().stream()
-                .map(board -> new BoardResponseDto(
-                        board.getTitle(),  // 글의 제목
-                        board.getContent(), // 글의 내용
-                        board.getCreatedAt(), // 작성 일시
-                        board.getLikeCount() // 글 좋아요 수
-                ))
-                .collect(Collectors.toList());
+        List <BoardResponseDto> boardResponseList = new ArrayList<>();
+
+        for (var board : member.getBoards()) {
+            BoardResponseDto dto = new BoardResponseDto(
+                    board.getTitle(),
+                    board.getContent(),
+                    board.getCreatedAt(),
+                    board.getLikeCount()
+            );
+            boardResponseList.add(dto);
+        }
+        return boardResponseList;
     }
     // 좋아요 게시물 조회
     @Transactional(readOnly = true)
-    public List<BoardResponseDto> getLikedBoards(Long memberId){
+    public List<BoardResponseDto> getLikedBoards(Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
-        return member.getLikeBoard().stream()
-                .map(board -> new BoardResponseDto(
-                        board.getTitle(),  // 글의 제목
-                        board.getContent(), // 글의 내용
-                        board.getCreatedAt(), // 작성 일시
-                        board.getLikeCount() // 글 좋아요 수
-                ))
-                .collect(Collectors.toList());
-    }
 
+        List<BoardResponseDto> boardResponseList = new ArrayList<>();
+
+        for (var board : member.getLikeBoard()) {
+            BoardResponseDto dto = new BoardResponseDto(
+                    board.getTitle(),
+                    board.getContent(),
+                    board.getCreatedAt(),
+                    board.getLikeCount()
+            );
+            boardResponseList.add(dto);
+        }
+        return boardResponseList;
+    }
 }
 
 
