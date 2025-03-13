@@ -4,6 +4,10 @@ import kpol.Inventory.global.security.jwt.JwtFilter;
 import kpol.Inventory.global.security.jwt.JwtTokenProvider;
 import kpol.Inventory.global.security.jwt.handler.JwtAccessDeniedHandler;
 import kpol.Inventory.global.security.jwt.handler.JwtAuthenticationEntryPoint;
+import kpol.Inventory.global.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
+import kpol.Inventory.global.security.oauth2.handler.OAuth2AuthenticationFailureHandler;
+import kpol.Inventory.global.security.oauth2.handler.OAuth2AuthenticationSuccessHandler;
+import kpol.Inventory.global.security.oauth2.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +27,10 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
     @Bean
     public static BCryptPasswordEncoder passwordEncoder() {
@@ -46,6 +54,12 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .oauth2Login(configure ->
+                        configure.authorizationEndpoint(config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
+                                .userInfoEndpoint(config -> config.userService(customOAuth2UserService))
+                                .successHandler(oAuth2AuthenticationSuccessHandler)
+                                .failureHandler(oAuth2AuthenticationFailureHandler)
                 )
                 .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
