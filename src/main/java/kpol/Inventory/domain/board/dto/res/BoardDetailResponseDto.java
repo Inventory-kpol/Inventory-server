@@ -1,15 +1,16 @@
 package kpol.Inventory.domain.board.dto.res;
 
 import kpol.Inventory.domain.board.entity.Board;
-import kpol.Inventory.domain.comment.entity.Comment;
+import kpol.Inventory.domain.board.entity.BoardImage;
+import kpol.Inventory.domain.comment.dto.res.CommentResponseDto;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 public class BoardDetailResponseDto {
@@ -21,7 +22,8 @@ public class BoardDetailResponseDto {
     private final int viewCount;
     private final int likeCount;
     private final Set<String> boardTags;
-    private final List<Comment> comments;
+    private final List<String> imageUrls;
+    private final List<CommentResponseDto> comments;
 
     public BoardDetailResponseDto(Board board) {
         this.nickname = board.getMember().getNickname();
@@ -32,7 +34,13 @@ public class BoardDetailResponseDto {
         this.viewCount = board.getViewCount();
         this.likeCount = board.getLikeCount();
         this.boardTags = new HashSet<>(board.getTagsName());
-        this.comments = new ArrayList<>();
+        this.imageUrls = board.getBoardImages().stream()
+                .map(BoardImage::getUrl)
+                .collect(Collectors.toList());
+        this.comments = board.getComments().stream()
+                .filter(comment -> comment.getParentComment() == null) // 부모 댓글만 필터링
+                .map(CommentResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     public static Page<BoardDetailResponseDto> toDtoPage(Page<Board> boardPage) {

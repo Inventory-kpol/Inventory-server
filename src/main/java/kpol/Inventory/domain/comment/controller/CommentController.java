@@ -5,7 +5,6 @@ import jakarta.validation.Valid;
 import kpol.Inventory.domain.comment.dto.req.CommentRequestDto;
 import kpol.Inventory.domain.comment.dto.res.CommentResponseDto;
 import kpol.Inventory.domain.comment.service.CommentService;
-import kpol.Inventory.domain.member.entity.Member;
 import kpol.Inventory.global.security.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

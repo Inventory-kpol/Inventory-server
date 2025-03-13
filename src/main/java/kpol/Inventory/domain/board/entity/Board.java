@@ -55,6 +55,9 @@ public class Board {
     private List<BoardTag> boardTags = new ArrayList<>();
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BoardImage> boardImages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToOne(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -69,6 +72,7 @@ public class Board {
         this.likeCount = 0;
         this.member = member;
         this.boardTags = new ArrayList<>();
+        this.boardImages = new ArrayList<>();
         this.comments = new ArrayList<>();
     }
 
@@ -86,5 +90,13 @@ public class Board {
         return boardTags.stream()
                 .map(boardTag -> boardTag.getTag().getName())
                 .collect(Collectors.toList());
+    }
+
+    public void viewBoard() {
+        this.viewCount++;
+    }
+
+    public void likeBoard() {
+        this.likeCount++;
     }
 }
