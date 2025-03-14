@@ -1,19 +1,21 @@
 package kpol.Inventory.domain.member.controller;
 
 import jakarta.validation.Valid;
-import kpol.Inventory.domain.member.dto.req.DeleteMemberRequestDto;
-import kpol.Inventory.domain.member.dto.req.LoginRequestDto;
-import kpol.Inventory.domain.member.dto.req.SignupRequestDto;
+import kpol.Inventory.domain.member.dto.req.*;
+import kpol.Inventory.domain.member.dto.res.EmailResponseDto;
 import kpol.Inventory.domain.member.dto.res.LoginResponseDto;
 import kpol.Inventory.domain.member.dto.res.SignupResponseDto;
+import kpol.Inventory.domain.member.service.EmailService;
 import kpol.Inventory.domain.member.service.MemberService;
 import kpol.Inventory.global.security.jwt.JwtTokenRequestDto;
 import kpol.Inventory.global.security.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+    private final EmailService emailService;
 
     // 회원가입
     @PostMapping("/signup")
@@ -57,6 +60,17 @@ public class MemberController {
     public ResponseEntity<Boolean> deleteMember(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody DeleteMemberRequestDto deleteMemberRequestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(memberService.deleteMember(userDetails.getMember(),deleteMemberRequestDto));
     }
+
+    // 인증 이메일 전송
+    @PostMapping("/sendEmail")
+    public ResponseEntity<EmailResponseDto> sendEmail(@RequestBody @Valid EmailRequestDto emailRequestDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(emailService.joinEmail(emailRequestDto.getEmail()));
+    }
+
+    // 인증 이메일 인증
+    @PostMapping("/mailAuthCheck")
+    public ResponseEntity<EmailResponseDto> mailAuthCheck(@RequestBody  @Valid EmailCheckDto emailCheckDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(emailService.mailAuthCheck(emailCheckDto.getEmail(), emailCheckDto.getAuthNum()));
 
     // 페이지 별 닉네임 반환
     @GetMapping("/page/nickname")
