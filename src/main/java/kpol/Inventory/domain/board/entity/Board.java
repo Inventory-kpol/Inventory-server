@@ -99,4 +99,8 @@ public class Board {
     public void likeBoard() {
         this.likeCount++;
     }
+
+    public void unlikeBoard() {
+        this.likeCount--;
+    }
 }

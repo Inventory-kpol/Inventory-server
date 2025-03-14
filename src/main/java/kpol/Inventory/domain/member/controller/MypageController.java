@@ -56,6 +56,5 @@ public class MypageController {
         Member member = userDetails.getMember();
         List<BoardResponseDto> likedBoards = mypageService.getLikedBoards(member.getId());
         return ResponseEntity.ok(likedBoards);
-
     }
 }
