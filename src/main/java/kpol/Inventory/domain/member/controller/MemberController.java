@@ -71,5 +71,10 @@ public class MemberController {
     @PostMapping("/mailAuthCheck")
     public ResponseEntity<EmailResponseDto> mailAuthCheck(@RequestBody  @Valid EmailCheckDto emailCheckDto) {
         return ResponseEntity.status(HttpStatus.OK).body(emailService.mailAuthCheck(emailCheckDto.getEmail(), emailCheckDto.getAuthNum()));
+
+    // 페이지 별 닉네임 반환
+    @GetMapping("/page/nickname")
+    public ResponseEntity<String> getMainNickname(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.getMainNickname(userDetails.getMember()));
     }
 }

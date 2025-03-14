@@ -44,11 +44,19 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LikeBoard> likeBoard = new ArrayList<>();
+
     public Member(SignupRequestDto signupRequestDto, String encodedPassword) {
         this.username = signupRequestDto.getUsername();
         this.nickname = signupRequestDto.getNickname();
         this.email = signupRequestDto.getEmail();
         this.password = encodedPassword;
         this.role = MemberRole.USER;
+    }
+
+    public void updateInfo(String nickname, String password){
+        this.nickname = nickname;
+        this.password = password;
     }
 }

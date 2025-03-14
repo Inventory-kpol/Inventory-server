@@ -8,13 +8,9 @@ import kpol.Inventory.domain.comment.dto.res.CommentResponseDto;
 import kpol.Inventory.domain.comment.entity.Comment;
 import kpol.Inventory.domain.comment.repository.CommentRepository;
 import kpol.Inventory.domain.member.entity.Member;
-import kpol.Inventory.global.exception.CustomException;
-import kpol.Inventory.global.exception.ErrorCode;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,6 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
+
     private final BoardRepository boardRepository;
 
     @Transactional
@@ -34,14 +31,14 @@ public class CommentService {
 
         // 게시글과 회원 조회
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
 
 
         //대댓글 작성시, 부모 댓글 확인
         Comment parentComment = null; //디폹트 값이 null, 대댓글인 경우에만 부모 댓글 객체 할당
         if (requestDto.getParentCommentId() != null) {
             parentComment = commentRepository.findById(requestDto.getParentCommentId())
-                    .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
+                    .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다."));
         }
 
         //댓글 작성
@@ -112,7 +109,7 @@ public class CommentService {
     public CommentResponseDto updateComment(Long commentId, CommentRequestDto requestDto){
         // 댓글 조회
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
+                .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다"));
 
         // 댓글 내용 수정
         comment.updateContent(requestDto.getContent());
@@ -140,12 +137,10 @@ public class CommentService {
     public Boolean deleteComment(Long commentId, Member member) {
         // 댓글 조회
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
+                .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다."));
 
         // 댓글 삭제
         commentRepository.delete(comment);
         return true;
     }
-
-
 }

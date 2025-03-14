@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-
-
 public class CommentResponseDto {
     private Long id; //댓글 고유 id
     private String content; // 댓글 내용
@@ -31,5 +29,20 @@ public class CommentResponseDto {
         this.boardId = boardId;
         this.parentCommentId = parentCommentId;
         this.replies = replies;
+    }
+  
+    public CommentResponseDto(Comment comment) {
+        this.id = comment.getId();
+        this.content = comment.getContent();
+        this.createdAt = comment.getCreatedAt();
+        this.updatedAt = comment.getUpdatedAt();
+        this.memberId = comment.getMember().getId();
+        this.boardId = comment.getBoard().getId();
+        this.parentCommentId = comment.getParentComment() != null ? comment.getParentComment().getId() : null;
+
+        // 대댓글을 재귀적으로 매핑
+        this.replies = comment.getReplies().stream()
+                .map(CommentResponseDto::new)
+                .collect(Collectors.toList());
     }
 }

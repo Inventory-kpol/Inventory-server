@@ -24,11 +24,6 @@ public enum ErrorCode {
     BOARD_GET_LATEST(HttpStatus.NOT_FOUND, 404, "최신 글 조회에 실패하였습니다."),
     TAG_ADDED_FAILED(HttpStatus.BAD_REQUEST, 400, "해시태그 추가에 실패하였습니다."),
     TAG_FOUNDED_FAILED(HttpStatus.BAD_REQUEST, 400, "해시태그 기반 검색에 실패하였습니다."),
-  
-    // Board
-    BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "게시물 조회에 실패하였습니다."),
-    BOARD_CREATED_FAILED(HttpStatus.BAD_REQUEST, 400, "게시물 생성에 실패하였습니다."),
-    TAG_ADDED_FAILED(HttpStatus.BAD_REQUEST, 400, "해시태그 추가에 실패하였습니다."),
     KEYWORD_CANNOT_EMPTY(HttpStatus.BAD_REQUEST, 400, "검색어는 공백이 될 수 없습니다."),
     TAG_CANNOT_EMPTY(HttpStatus.BAD_REQUEST, 400, "해시태그는 공백이 될 수 없습니다."),
 
@@ -43,6 +38,9 @@ public enum ErrorCode {
     JWT_NOT_MATCH(HttpStatus.BAD_REQUEST, 400, "[Jwt] 리프레시 토큰 불일치"),
     JWT_ENTRY_POINT(HttpStatus.UNAUTHORIZED, 401, "[Jwt] 인증되지 않은 사용자입니다."),
     JWT_ACCESS_DENIED(HttpStatus.FORBIDDEN, 403, "[Jwt] 리소스에 접근할 권한이 없습니다."),
+
+    // OAUTH
+    OAUTH_NAVER_UNLINK_FAILED(HttpStatus.BAD_REQUEST, 400, "[OAuth] 네이버 연동 해제에 실패했습니다."),
 
     // Member
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "맴버를 찾을 수 없습니다."),
@@ -60,7 +58,7 @@ public enum ErrorCode {
 
     // RequestBody
     INVALID_PARAMS(HttpStatus.BAD_REQUEST, 400, "유효하지 않은 데이터가 전송되었습니다.");
-  
+
     private final HttpStatus httpStatus;
     private final Integer code;
     private final String message;

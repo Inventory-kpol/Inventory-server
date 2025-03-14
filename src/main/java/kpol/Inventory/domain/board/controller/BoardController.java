@@ -25,7 +25,8 @@ public class BoardController {
 
     // 글 작성
     @PostMapping
-    public ResponseEntity<BoardDetailResponseDto> createBoard(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody BoardRequestDto boardRequestDto) {
+    public ResponseEntity<BoardDetailResponseDto> createBoard(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                              @Valid @RequestBody BoardRequestDto boardRequestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(boardService.createBoard(userDetails, boardRequestDto));
     }
 
@@ -49,7 +50,8 @@ public class BoardController {
 
     // 글 수정
     @PutMapping("/{boardId}")
-    public ResponseEntity<BoardDetailResponseDto> updateBoard(@PathVariable Long boardId ,@Valid @RequestBody BoardUpdateRequestDto boardUpdateRequestDto) {
+    public ResponseEntity<BoardDetailResponseDto> updateBoard(@PathVariable Long boardId,
+                                                              @Valid @RequestBody BoardUpdateRequestDto boardUpdateRequestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(boardService.updateBoard(boardId ,boardUpdateRequestDto));
     }
 
@@ -63,5 +65,12 @@ public class BoardController {
     @GetMapping("/new")
     public ResponseEntity<List<BoardListResponseDto>> getLatestPosts() {
         return ResponseEntity.status(HttpStatus.OK).body(boardService.getLatestPosts());
+    }
+
+    // 글 좋아요
+    @PostMapping("/like/{boardId}")
+    public ResponseEntity<BoardDetailResponseDto> likeBoard(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                                            @PathVariable Long boardId) {
+        return ResponseEntity.status(HttpStatus.OK).body(boardService.likeBoard(userDetails, boardId));
     }
 }

@@ -73,7 +73,7 @@ public class MemberService {
             throw new CustomException(ErrorCode.LOGIN_FAILED);
         }
 
-        if (refreshTokenRepository.findByEmail(member.getEmail()).isPresent()){
+        if (refreshTokenRepository.findByEmail(member.getEmail()).isPresent()) {
             refreshTokenRepository.deleteByEmail(member.getEmail());
         }
 
@@ -151,5 +151,9 @@ public class MemberService {
         memberRepository.delete(member);
         log.info("Member {} deleted", member);
         return true;
+    }
+
+    public String getMainNickname(Member member) {
+        return member.getNickname();
     }
 }
