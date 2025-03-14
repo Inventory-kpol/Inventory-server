@@ -24,7 +24,8 @@ public class JwtFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
 
         if (requestURI.startsWith("/api/member/signup") || requestURI.startsWith("/api/member/login")
-                || requestURI.startsWith("/api/member/email") || requestURI.startsWith("/api/member/nickname")) {
+                || requestURI.startsWith("/api/member/sendEmail") || requestURI.startsWith("/api/member/mailAuthCheck")
+                || requestURI.startsWith("/api/member/nickname")) {
             filterChain.doFilter(request, response);
         }
 

@@ -24,20 +24,20 @@ public class EmailConfig {
     @Value("${spring.mail.password}")
     private String password;
 
-    @Value("${spring mail.properties.mail.smtp.auth}")
+    @Value("${spring.mail.properties.mail.smtp.auth}")
     private boolean auth;
 
     @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
     private boolean starttlsEnable;
 
     @Value("${spring.mail.properties.mail.smtp.connectiontimeout}")
-    private boolean connectionTimeout;
+    private int connectionTimeout;
 
     @Value("${spring.mail.properties.mail.smtp.timeout}")
-    private boolean timeout;
+    private int timeout;
 
-    @Value("${spring.mail.properties.mail.smtp.writeTimeout}")
-    private boolean writeTimeout;
+    @Value("${spring.mail.properties.mail.smtp.writetimeout}")
+    private int writeTimeout;
 
     @Bean
     public EmailService emailService() {

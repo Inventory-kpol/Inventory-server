@@ -28,8 +28,8 @@ public class EmailService {
     private final JavaMailSender mailSender;
 
     @Autowired
-    private int authNumber;
     private RedisUtil redisUtil;
+    private int authNumber;
 
     @Value("${spring.mail.username}")
     private String fromEmail;
@@ -102,7 +102,8 @@ public class EmailService {
             throw new CustomException(ErrorCode.EMAIL_SEND_FAILED);
         }
 
-
+        // 5분 동안 인증번호가 생존
+        redisUtil.setDataExpire(Integer.toString(authNumber), toEmail, 60 * 10L);
     }
     public SimpleMailMessage createEmailForm(String toEmail, String title, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
