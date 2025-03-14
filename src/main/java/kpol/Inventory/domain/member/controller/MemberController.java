@@ -10,7 +10,6 @@ import kpol.Inventory.domain.member.service.MemberService;
 import kpol.Inventory.global.security.jwt.JwtTokenRequestDto;
 import kpol.Inventory.global.security.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -71,6 +70,7 @@ public class MemberController {
     @PostMapping("/mailAuthCheck")
     public ResponseEntity<EmailResponseDto> mailAuthCheck(@RequestBody  @Valid EmailCheckDto emailCheckDto) {
         return ResponseEntity.status(HttpStatus.OK).body(emailService.mailAuthCheck(emailCheckDto.getEmail(), emailCheckDto.getAuthNum()));
+    }
 
     // 페이지 별 닉네임 반환
     @GetMapping("/page/nickname")
