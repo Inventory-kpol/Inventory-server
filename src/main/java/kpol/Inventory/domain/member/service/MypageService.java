@@ -1,7 +1,9 @@
 package kpol.Inventory.domain.member.service;
 
 import kpol.Inventory.domain.board.dto.res.BoardResponseDto;
+import kpol.Inventory.domain.board.entity.Board;
 import kpol.Inventory.domain.member.dto.res.MemberResponseDto;
+import kpol.Inventory.domain.member.entity.LikeBoard;
 import kpol.Inventory.domain.member.entity.Member;
 import kpol.Inventory.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +51,7 @@ public class MypageService {
 
         for (var board : member.getBoards()) {
             BoardResponseDto dto = new BoardResponseDto(
+                    board.getId(),
                     board.getTitle(),
                     board.getContent(),
                     board.getCreatedAt(),
@@ -58,6 +61,7 @@ public class MypageService {
         }
         return boardResponseList;
     }
+
     // 좋아요 게시물 조회
     @Transactional(readOnly = true)
     public List<BoardResponseDto> getLikedBoards(Long memberId) {
@@ -66,8 +70,11 @@ public class MypageService {
 
         List<BoardResponseDto> boardResponseList = new ArrayList<>();
 
-        for (var board : member.getLikeBoard()) {
+        for (LikeBoard likeBoard : member.getLikeBoard()) {
+            Board board = likeBoard.getBoard();
+
             BoardResponseDto dto = new BoardResponseDto(
+                    board.getId(),
                     board.getTitle(),
                     board.getContent(),
                     board.getCreatedAt(),

@@ -12,7 +12,9 @@ import kpol.Inventory.domain.board.entity.BoardTag;
 import kpol.Inventory.domain.board.entity.Tag;
 import kpol.Inventory.domain.board.repository.BoardImageRepository;
 import kpol.Inventory.domain.board.repository.BoardRepository;
+import kpol.Inventory.domain.board.repository.LikeBoardRepository;
 import kpol.Inventory.domain.board.repository.TagRepository;
+import kpol.Inventory.domain.member.entity.LikeBoard;
 import kpol.Inventory.domain.member.entity.Member;
 import kpol.Inventory.global.exception.CustomException;
 import kpol.Inventory.global.exception.ErrorCode;
@@ -29,10 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -43,6 +42,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final TagRepository tagRepository;
     private final BoardImageRepository boardImageRepository;
+    private final LikeBoardRepository likeBoardRepository;
     @Value("${file.path}")
     private String uploadFolder;
 
@@ -277,10 +277,20 @@ public class BoardService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
 
-        board.likeBoard();
-        boardRepository.save(board);
+        Optional<LikeBoard> likeBoardOptional = likeBoardRepository.findByMemberIdAndBoardId(member.getId(), boardId);
 
-        member.getLikeBoard().add(board);
+        if (likeBoardOptional.isEmpty()) {
+            log.info("Like Board");
+            board.likeBoard();
+
+            LikeBoard likeBoard = new LikeBoard(member, board);
+            likeBoardRepository.save(likeBoard);
+        } else {
+            log.info("Unlike Board");
+            board.unlikeBoard();
+
+            likeBoardRepository.delete(likeBoardOptional.get());
+        }
 
         return new BoardDetailResponseDto(board);
     }
